@@ -7,8 +7,35 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="scroll-container">
+    <div class="scroll-container camera-page">
+        <img src="2-1.png" alt="Get your camera ready in 10 seconds" class="title-text">
         
+        <div class="camera-box">
+            <video id="webcam" autoplay playsinline></video>
+        </div>
     </div>
+
+    <script>
+        async function startWebcam() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                const videoElement = document.getElementById('webcam');
+                
+                videoElement.srcObject = stream;
+            } catch (error) {
+                console.error("웹캠을 켜는 데 실패했습니다:", error);
+                alert("카메라 권한을 허용해주셔야 웹캠 화면을 볼 수 있습니다.");
+            }
+        }
+
+       window.addEventListener('DOMContentLoaded', () => {
+            startWebcam();
+
+          
+            setTimeout(() => {
+                window.location.href = "third.html";
+            }, 10000);
+        });
+    </script>
 </body>
 </html>

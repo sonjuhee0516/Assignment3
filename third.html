@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Third Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div class="scroll-container">
+        <img src="3-1.png" alt="세번째 페이지 첫 이미지">
+
+        <img src="3-2.png" alt="Waiting for photo..." class="sub-text">
+
+        <div class="question-container">
+            <div class="question-box">
+                <div id="question-count">1/5</div>
+                
+                <div id="question-text">여기에 첫 번째 질문이 들어갑니다.</div>
+                
+                <div id="next-arrow">&gt;</div>
+            </div>
+        </div>
+
+        <a href="fourth.html" id="next-link">
+            <img src="img_btn.png" alt="Wanna see photo?!">
+        </a>
+    </div>
+
+    <video id="hidden-webcam" autoplay playsinline style="display:none;"></video>
+    <canvas id="photo-canvas" style="display:none;"></canvas>
+
+    <script>
+        const allQuestions = [
+            "최근에 가장 크게 웃었던 일이 무엇인가요?",
+            "오늘 서로를 처음 봤을 때 어떤 생각이 들었나요?",
+            "스마트폰 없이 일주일을 살아야 한다면 어떨 것 같나요?",
+            "가장 기억에 남는 여행이나 순간은 언제인가요?",
+            "최근에 새로 알게 된 서로의 의외의 모습이 있나요?",
+            "서로에게 가장 고마웠던 순간은 언제인가요?",
+            "내가 생각하는 나만의 숨겨진 장점은?"
+        ];
+
+        let currentQuestions = [];
+        let currentIndex = 0;
+
+        // 질문 무작위로 섞어서 5개만 고르는 함수
+        function shuffleQuestions() {
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            currentQuestions = shuffled.slice(0, 5);
+        }
+
+        // 화면에 질문을 업데이트하는 함수
+        function updateQuestion() {
+            document.getElementById('question-count').innerText = `${currentIndex + 1}/5`;
+            document.getElementById('question-text').innerText = currentQuestions[currentIndex];
+        }
+
+        // 화살표 클릭 이벤트
+        document.getElementById('next-arrow').addEventListener('click', () => {
+            if (currentIndex < 4) {
+                currentIndex++;
+                updateQuestion();
+            } else {
+                alert("마지막 질문입니다! 아래 버튼을 눌러 사진을 확인해보세요.");
+            }
+        });
+
+
+        /* ========================================================
+           [기능 2] 배경에서 몰래 웹캠 켜기 및 랜덤 사진 촬영
+        ======================================================== */
+        async function setupHiddenWebcam() {
+            try {
+                // 화면 표시 없이 카메라 스트림만 가져옴
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                const videoElement = document.getElementById('hidden-webcam');
+                videoElement.srcObject = stream;
+
+                // 카메라가 켜지면 랜덤 타이머 가동 (30초 ~ 240초 사이)
+                const minTime = 30000;  // 30초
+                const maxTime = 240000; // 4분
+                const randomDelay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+
+                console.log(`${randomDelay / 1000}초 뒤에 사진이 촬영됩니다.`);
+
+                // 지정된 시간이 지나면 비밀리에 찰칵!
+                setTimeout(takeHiddenPhoto, randomDelay);
+
+            } catch (error) {
+                console.error("카메라를 가져오지 못했습니다:", error);
+            }
+        }
+
+        function takeHiddenPhoto() {
+            const video = document.getElementById('hidden-webcam');
+            const canvas = document.getElementById('photo-canvas');
+            const context = canvas.getContext('2d');
+
+            // 비디오 화면 크기대로 도화지 크기 설정
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // 좌우 반전(거울 모드) 상태로 도화지에 그리기 위해 세팅
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
+
+            // 현재 비디오 프레임을 도화지에 찰칵 복사
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // 도화지에 그린 이미지를 글자 데이터(정확히는 데이터 URL)로 변환
+            const imageData = canvas.toDataURL('image/png');
+
+            // 브라우저 임시 메모리(sessionStorage)에 'myCapturedPhoto'라는 이름으로 저장!
+            sessionStorage.setItem('myCapturedPhoto', imageData);
+            console.log("사진 촬영 및 임시 저장 완료!");
+
+            // 사진이 찍혔으면 카메라를 완전히 꺼서 노트북 카메라 불빛을 꺼줍니다 (보안/배터리 절약)
+            const stream = video.srcObject;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        }
+
+        // 페이지 시작 시 작동
+        window.addEventListener('DOMContentLoaded', () => {
+            shuffleQuestions();     // 1. 질문 랜덤 섞기
+            updateQuestion();       // 2. 첫 질문 보여주기
+            setupHiddenWebcam();    // 3. 몰래 카메라 대기
+        });
+    </script>
+</body>
+</html>
+    </div>
+
+</body>
+</html>

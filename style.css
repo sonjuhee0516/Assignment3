@@ -6,12 +6,18 @@ body {
     justify-content: center;  
 }
 
+@font-face {
+    font-family: 'bitcount'; /* 내가 지어준 폰트 이름 */
+    src: url('BitcountGridSingle-Medium.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 
 .scroll-container {
     width: 100%;
-    max-width: 800px; /* 작업하신 이미지의 실제 가로 너비에 맞게 조절하세요 */
+    max-width: 1000px;
     display: flex;
-    flex-direction: column; /* 이미지들을 위에서 아래로 세로 배치 */
+    flex-direction: column;
 }
 
 /* 3. 이미지 스타일 설정 */
@@ -32,13 +38,113 @@ a img {
 
 @keyframes blink {
     0% {
-        opacity: 1; /* 완전히 선명함 */
+        opacity: 1;
     }
     50% {
-        opacity: 0.2; /* 반쯤 투명함 (완전히 안 보이게 하려면 0) */
+        opacity: 0.2;
     }
     100% {
-        opacity: 1; /* 다시 완전히 선명함 */
+        opacity: 1;
     }
 }
 
+
+.camera-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.title-text {
+    width: 80%;
+    margin-bottom: 40px;
+}
+
+/* 디자인하신 회색 상자 크기 구현 */
+.camera-box {
+    width: 800px; 
+    height: 500px;
+    background-color: #d9d9d9;
+    border-radius: 0px;
+    overflow: hidden; 
+}
+
+/* 실제 웹캠 비디오 스타일 */
+#webcam {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: rotateY(180deg);
+}
+
+.third-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.sub-text {
+    width: 60%;
+    margin: 20px 0;
+}
+
+/* 하늘색 질문 상자 스타일 */
+.question-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.question-box {
+    width: 500px;          /* 하늘색 상자 가로 크기 */
+    height: 250px;         /* 하늘색 상자 세로 크기 */
+    background-color: #eefaff; /* 하늘색 배경 */
+    border-radius: 30px;   /* 둥근 모서리 */
+    position: relative;    /* 안의 요소들 배치를 고정하기 위함 */
+    padding: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: bitcount; /* 폰트가 있다면 변경 가능 */
+}
+
+/* 1/5 숫자 표시 위치 */
+#question-count {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+/* 질문 텍스트 스타일 */
+#question-text {
+    width: 70%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #000;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+}
+
+/* 오른쪽 화살표 버튼 위치 및 스타일 */
+#next-arrow {
+    position: absolute;
+    right: 30px;
+    bottom: 50%;
+    transform: translateY(50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+#next-arrow:hover {
+    color: #ff6b81; /* 마우스 올렸을 때 살짝 포인트 컬러로 변경 */
+}
