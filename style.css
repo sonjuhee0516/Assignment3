@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;  
+}
+
+
+.scroll-container {
+    width: 100%;
+    max-width: 800px; /* 작업하신 이미지의 실제 가로 너비에 맞게 조절하세요 */
+    display: flex;
+    flex-direction: column; /* 이미지들을 위에서 아래로 세로 배치 */
+}
+
+/* 3. 이미지 스타일 설정 */
+.scroll-container img {
+    width: 100%;       
+    height: auto;      
+    display: block;  
+}
+
+a img {
+    cursor: pointer;
+    
+    animation-name: blink;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1; /* 완전히 선명함 */
+    }
+    50% {
+        opacity: 0.2; /* 반쯤 투명함 (완전히 안 보이게 하려면 0) */
+    }
+    100% {
+        opacity: 1; /* 다시 완전히 선명함 */
+    }
+}
+
