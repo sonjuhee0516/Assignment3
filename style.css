@@ -15,7 +15,7 @@ body {
 
 .scroll-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
 }
@@ -27,7 +27,7 @@ body {
     display: block;  
 }
 
-a img {
+.blink-target {
     cursor: pointer;
     
     animation-name: blink;
@@ -68,6 +68,7 @@ a img {
     background-color: #d9d9d9;
     border-radius: 0px;
     overflow: hidden; 
+    margin-bottom: 150px;
 }
 
 /* 실제 웹캠 비디오 스타일 */
@@ -95,7 +96,7 @@ a img {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 150px;
 }
 
 .question-box {
@@ -110,7 +111,7 @@ a img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: bitcount; /* 폰트가 있다면 변경 가능 */
+    font-family: 'bitcount'; /* 폰트가 있다면 변경 가능 */
 }
 
 /* 1/5 숫자 표시 위치 */

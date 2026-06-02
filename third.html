@@ -17,14 +17,14 @@
             <div class="question-box">
                 <div id="question-count">1/5</div>
                 
-                <div id="question-text">여기에 첫 번째 질문이 들어갑니다.</div>
+                <div id="question-text"></div>
                 
                 <div id="next-arrow">&gt;</div>
             </div>
         </div>
 
         <a href="fourth.html" id="next-link">
-            <img src="3-3.png" alt="Wanna see photo?!">
+            <img src="3-3.png" alt="Wanna see photo?!" class="blink-target">
         </a>
     </div>
 
@@ -41,7 +41,7 @@
             "What song or artist have you been listening to on repeat lately?",
             "What was the most delicious thing you ate this past week?",
             "What is a hobby or skill you’ve always wanted to try but haven't yet?",
-            "What is a small core memory from your childhood that you still think of?"
+            "What is a small core memory from your childhood that you still think of?",
             "If you could teleport to any place for just one hour, where would you go?",
             "If you could perfectly master any language instantly, what would it be?",
             "What is your ultimate favorite spot on campus to hide or relax?",
@@ -80,19 +80,17 @@
         ======================================================== */
         async function setupHiddenWebcam() {
             try {
-                // 화면 표시 없이 카메라 스트림만 가져옴
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 const videoElement = document.getElementById('hidden-webcam');
                 videoElement.srcObject = stream;
 
-                // 카메라가 켜지면 랜덤 타이머 가동 (30초 ~ 240초 사이)
-                const minTime = 30000;  // 30초
-                const maxTime = 240000; // 4분
+                // 30초 ~ 4분 사이 랜덤 타이머
+                const minTime = 30000;  
+                const maxTime = 180000; 
                 const randomDelay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
 
                 console.log(`${randomDelay / 1000}초 뒤에 사진이 촬영됩니다.`);
 
-                // 지정된 시간이 지나면 비밀리에 찰칵!
                 setTimeout(takeHiddenPhoto, randomDelay);
 
             } catch (error) {
@@ -105,25 +103,18 @@
             const canvas = document.getElementById('photo-canvas');
             const context = canvas.getContext('2d');
 
-            // 비디오 화면 크기대로 도화지 크기 설정
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
 
-            // 좌우 반전(거울 모드) 상태로 도화지에 그리기 위해 세팅
             context.translate(canvas.width, 0);
             context.scale(-1, 1);
 
-            // 현재 비디오 프레임을 도화지에 찰칵 복사
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // 도화지에 그린 이미지를 글자 데이터(정확히는 데이터 URL)로 변환
             const imageData = canvas.toDataURL('image/png');
-
-            // 브라우저 임시 메모리(sessionStorage)에 'myCapturedPhoto'라는 이름으로 저장!
             sessionStorage.setItem('myCapturedPhoto', imageData);
             console.log("사진 촬영 및 임시 저장 완료!");
 
-            // 사진이 찍혔으면 카메라를 완전히 꺼서 노트북 카메라 불빛을 꺼줍니다 (보안/배터리 절약)
             const stream = video.srcObject;
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
@@ -137,9 +128,5 @@
             setupHiddenWebcam();    // 3. 몰래 카메라 대기
         });
     </script>
-</body>
-</html>
-    </div>
-
 </body>
 </html>

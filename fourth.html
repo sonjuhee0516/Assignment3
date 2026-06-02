@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fourth Page - Result</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        .fourth-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            padding-bottom: 100px;
+            position: relative; /* 홈 버튼의 기준점 */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .home-btn-wrapper {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 999; /* 화면 최상단으로 강제 고정 */
+        }
+
+        .fourth-page .home-btn-wrapper a img.home-btn {
+            width: 70px !important;      
+            height: auto !important;
+            animation: none !important;
+            opacity: 1 !important;  
+            display: block !important;
+        }
+
+        .title-img {
+            width: 800px; /* 너무 크지도 작지도 않게 적당히 강조되는 크기 */
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        /* 폴라로이드 프레임 스타일 */
+        .polaroid-frame {
+            background-color: white;
+            padding: 20px 20px 40px 20px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; 
+            margin-top: 10px;
+        }
+
+        .captured-photo {
+            width: 450px;  /* 원래 600px에서 450px로 축소하여 균형을 맞춤 */
+            height: 300px; /* 가로 세로 비율 유지 */
+            background-color: #d9d9d9;
+            object-fit: cover;
+            display: block;
+        }
+
+        #download-link {
+            position: absolute;
+            top: -30px; 
+            right: 0;
+            width: 20px; 
+            height: 20px;
+            display: block;
+            z-index: 995;
+        }
+
+        .fourth-page .polaroid-frame #download-link img.download-btn {
+            width: 100% !important;
+            height: auto !important;
+            animation: none !important;  
+            opacity: 1 !important;       
+            cursor: pointer !important;
+        }
+
+        /* 폴라로이드 하단 날짜 텍스트 스타일 */
+        .date-text {
+            margin-top: 25px;
+            font-size: 20px; /* 사진 크기에 맞춰 폰트 사이즈도 살짝 조절 */
+            font-family: sans-serif; 
+            color: #333;
+            letter-spacing: 1px;
+            font-family: 'bitcount';
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-container fourth-page">
+        
+        <div class="home-btn-wrapper">
+            <a href="first.html">
+                <img src="homebutton.png" alt="Home" class="home-btn">
+            </a>
+        </div>
+
+        <img src="4-2.png" alt="Here's your photo!" class="title-img">
+
+        <div class="polaroid-frame">
+            
+            <a id="download-link" download="awareness_memory.png">
+                <img src="download.png" alt="Download" class="download-btn">
+            </a>
+
+            <img id="result-image" class="captured-photo" alt="No photo captured">
+
+            <div id="today-date" class="date-text">MM.DD.YYYY</div>
+        </div>
+
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            /* ========================================================
+               [기능 1] 3번째 페이지에서 몰래 찍은 사진 불러오기 & 다운로드 연결
+            ======================================================== */
+            const savedPhoto = sessionStorage.getItem('myCapturedPhoto');
+            const imageElement = document.getElementById('result-image');
+            const downloadLink = document.getElementById('download-link');
+
+            if (savedPhoto) {
+                imageElement.src = savedPhoto;
+                downloadLink.href = savedPhoto;
+            } else {
+                imageElement.alt = "사진을 찾을 수 없습니다. 카메라 권한을 확인해주세요!";
+                if(downloadLink) downloadLink.style.display = 'none'; 
+            }
+
+            /* ========================================================
+               [기능 2] 오늘 날짜 자동으로 구해서 넣기 (MM.DD.YYYY 형식)
+            ======================================================== */
+            const now = new Date();
+            
+            const month = String(now.getMonth() + 1).padStart(2, '0'); 
+            const date = String(now.getDate()).padStart(2, '0');
+            const year = now.getFullYear(); 
+
+            const formattedDate = `${month}.${date}.${year}`;
+
+            document.getElementById('today-date').innerText = formattedDate;
+        });
+    </script>
+</body>
+</html>
