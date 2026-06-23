@@ -6,11 +6,11 @@
     <title>Third Page</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body class="third-page-body">
 
     <div class="scroll-container third-page-flow">
         <section id="over-screen" class="third-stage over-stage">
-            <img src="3-1.png" alt="10 second is over!">
+            <div class="over-burst">10 second is over!</div>
         </section>
 
         <section id="questions-screen" class="third-stage question-stage hidden">
@@ -177,7 +177,7 @@
             shuffleQuestions();     // 1. 질문 랜덤 섞기
             updateQuestion();       // 2. 첫 질문 보여주기
             setupHiddenWebcam();    // 3. 몰래 카메라 대기
-            setTimeout(showQuestionScreen, 1000); // 4. 10초 종료 화면을 1초 보여준 뒤 질문 화면으로 이동
+            setTimeout(showQuestionScreen, 2000); // 4. 10초 종료 화면을 2초 보여준 뒤 질문 화면으로 이동
         });
     </script>
 </body>

@@ -7,6 +7,15 @@ body {
     font-family: 'bitcount', sans-serif;
 }
 
+body.second-page-body {
+    background-color: #F7FFF0;
+}
+
+body.third-page-body,
+body.fourth-page-body {
+    background-color: #FFFFF0;
+}
+
 @font-face {
     font-family: 'bitcount'; /* 내가 지어준 폰트 이름 */
     src: url('Bitcount_Grid_Single/BitcountGridSingle-Medium.ttf') format('truetype');
@@ -55,7 +64,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
     padding-top: 50px;
+    background-color: #F7FFF0;
+    background-image: radial-gradient(circle, #F3EFFF 0 14px, transparent 15px);
+    background-size: 112px 112px;
+    background-position: 26px 22px;
 }
 
 .title-text {
@@ -86,6 +101,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FFFFF0;
 }
 
 .sub-text {
@@ -101,6 +117,7 @@ body {
     width: 100%;
     min-height: 100vh;
     box-sizing: border-box;
+    background-color: #FFFFF0;
 }
 
 .over-stage {
@@ -114,16 +131,34 @@ body {
     opacity: 0;
 }
 
+.over-burst {
+    width: min(520px, 78vw);
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 28px 56px;
+    background-color: #CCFFF1;
+    clip-path: polygon(0 48%, 16% 43%, 6% 30%, 25% 35%, 20% 16%, 39% 30%, 50% 0, 61% 30%, 80% 16%, 75% 35%, 94% 30%, 84% 43%, 100% 48%, 84% 57%, 94% 70%, 75% 65%, 80% 84%, 61% 70%, 50% 100%, 39% 70%, 20% 84%, 25% 65%, 6% 70%, 16% 57%);
+    color: #ff6f95;
+    font-family: 'bitcount', sans-serif;
+    font-size: 27px;
+    text-align: center;
+}
+
 .question-stage {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 70px 20px 90px;
+    justify-content: center;
+    gap: 34px;
+    padding: 40px 20px;
     animation: pageFadeIn 0.45s ease;
 }
 
 .question-heading {
-    margin-bottom: 34px;
+    margin-bottom: 0;
     text-align: center;
     font-family: 'bitcount', sans-serif;
     font-size: 19px;
@@ -273,7 +308,8 @@ body {
 
 @media (max-width: 640px) {
     .question-stage {
-        padding: 52px 14px 70px;
+        gap: 24px;
+        padding: 30px 14px;
     }
 
     .question-heading {
@@ -313,6 +349,12 @@ body {
 
     .check-photo-link {
         min-height: 88px;
+        font-size: 19px;
+    }
+
+    .over-burst {
+        min-height: 118px;
+        padding: 24px 42px;
         font-size: 19px;
     }
 }
