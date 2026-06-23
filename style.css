@@ -28,6 +28,11 @@ body.fourth-page-body {
     background-repeat: repeat;
 }
 
+body.index-page-body {
+    display: block;
+    background-color: #ffffff;
+}
+
 @font-face {
     font-family: 'bitcount'; /* 내가 지어준 폰트 이름 */
     src: url('Bitcount_Grid_Single/BitcountGridSingle-Medium.ttf') format('truetype');
@@ -41,6 +46,86 @@ body.fourth-page-body {
     max-width: 1000px;
     display: flex;
     flex-direction: column;
+}
+
+.index-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.index-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.index-inner,
+.index-img {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.index-hero-section,
+.index-white-section {
+    background-color: #ffffff;
+}
+
+.index-cream-section {
+    background-color: #FFFFF0;
+}
+
+.index-ready-section {
+    min-height: 260px;
+    align-items: center;
+    background-color: #EDFDFF;
+}
+
+.hero-art {
+    width: 100%;
+    aspect-ratio: 1526 / 760;
+    background-image: url('1-1.png');
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+.hero-title {
+    margin: 16px 0 120px;
+    text-align: center;
+    font-family: 'bitcount', sans-serif;
+    font-size: 36px;
+}
+
+.ready-start-link {
+    width: min(430px, 72vw);
+    min-height: 136px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 26px 54px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #FFFFF0;
+    font-family: 'bitcount', sans-serif;
+    font-size: 28px;
+    clip-path: polygon(50% 0%, 54% 24%, 62% 4%, 63% 28%, 74% 8%, 71% 33%, 84% 17%, 78% 40%, 96% 31%, 82% 48%, 100% 50%, 82% 52%, 96% 69%, 78% 60%, 84% 83%, 71% 67%, 74% 92%, 63% 72%, 62% 96%, 54% 76%, 50% 100%, 46% 76%, 38% 96%, 37% 72%, 26% 92%, 29% 67%, 16% 83%, 22% 60%, 4% 69%, 18% 52%, 0% 50%, 18% 48%, 4% 31%, 22% 40%, 16% 17%, 29% 33%, 26% 8%, 37% 28%, 38% 4%, 46% 24%);
+}
+
+.accent-bitcount,
+.camera-title,
+.over-burst,
+.question-heading-point,
+.check-photo-link {
+    color: #FFAEE7;
+    -webkit-text-fill-color: #FFAEE7;
+    -webkit-text-stroke: 1px #FF0000;
+    text-shadow:
+        1px 0 0 #FF0000,
+        -1px 0 0 #FF0000,
+        0 1px 0 #FF0000,
+        0 -1px 0 #FF0000;
 }
 
 /* 3. 이미지 스타일 설정 */
@@ -91,7 +176,6 @@ body.fourth-page-body {
     width: min(760px, 86vw);
     margin: 54px 0 54px;
     text-align: center;
-    color: #ff6f95;
     font-family: 'bitcount', sans-serif;
     font-size: 36px;
     line-height: 1.42;
@@ -160,7 +244,6 @@ body.fourth-page-body {
     padding: 28px 56px;
     background-color: #CCFFF1;
     clip-path: polygon(50% 0%, 54% 24%, 62% 4%, 63% 28%, 74% 8%, 71% 33%, 84% 17%, 78% 40%, 96% 31%, 82% 48%, 100% 50%, 82% 52%, 96% 69%, 78% 60%, 84% 83%, 71% 67%, 74% 92%, 63% 72%, 62% 96%, 54% 76%, 50% 100%, 46% 76%, 38% 96%, 37% 72%, 26% 92%, 29% 67%, 16% 83%, 22% 60%, 4% 69%, 18% 52%, 0% 50%, 18% 48%, 4% 31%, 22% 40%, 16% 17%, 29% 33%, 26% 8%, 37% 28%, 38% 4%, 46% 24%);
-    color: #ff6f95;
     font-family: 'bitcount', sans-serif;
     font-size: 27px;
     text-align: center;
@@ -187,7 +270,6 @@ body.fourth-page-body {
 
 .question-heading-point {
     margin-top: 10px;
-    color: #ff6f95;
     font-size: 31px;
 }
 
@@ -213,7 +295,7 @@ body.fourth-page-body {
 .question-box {
     width: min(560px, 82vw);          /* 하늘색 상자 가로 크기 */
     min-height: 300px;         /* 하늘색 상자 세로 크기 */
-    background-color: #eefaff; /* 하늘색 배경 */
+    background-color: #EDFDFF; /* 하늘색 상자 배경 */
     border-radius: 22px;   /* 둥근 모서리 */
     position: relative;    /* 안의 요소들 배치를 고정하기 위함 */
     padding: 60px 86px 46px;
@@ -314,7 +396,6 @@ body.fourth-page-body {
     justify-content: center;
     text-decoration: none;
     background-color: #fff9ff;
-    color: #ff6f95;
     font-family: 'bitcount', sans-serif;
     font-size: 24px;
     animation: blink 1.5s ease-in-out infinite;
@@ -322,7 +403,8 @@ body.fourth-page-body {
 }
 
 .check-photo-link:hover {
-    color: #ff426e;
+    -webkit-text-fill-color: #FFAEE7;
+    color: #FFAEE7;
 }
 
 @media (max-width: 640px) {
@@ -334,6 +416,22 @@ body.fourth-page-body {
     .camera-title {
         margin: 44px 0 42px;
         font-size: 25px;
+    }
+
+    .hero-title {
+        margin: 10px 0 78px;
+        font-size: 25px;
+    }
+
+    .index-ready-section {
+        min-height: 210px;
+    }
+
+    .ready-start-link {
+        width: min(330px, 78vw);
+        min-height: 112px;
+        padding: 22px 42px;
+        font-size: 21px;
     }
 
     .question-heading {
