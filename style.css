@@ -94,17 +94,17 @@ body.index-page-body {
     margin: 16px 0 120px;
     text-align: center;
     font-family: 'bitcount', sans-serif;
-    font-size: 36px;
+    font-size: 43px;
 }
 
 .ready-start-link {
-    width: min(430px, 72vw);
-    min-height: 136px;
+    width: min(500px, 78vw);
+    min-height: 158px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding: 26px 54px;
+    padding: 34px 72px;
     text-align: center;
     text-decoration: none;
     background-color: #FFFFF0;
@@ -118,14 +118,8 @@ body.index-page-body {
 .over-burst,
 .question-heading-point,
 .check-photo-link {
-    color: #FFAEE7;
-    -webkit-text-fill-color: #FFAEE7;
-    -webkit-text-stroke: 1px #FF0000;
-    text-shadow:
-        1px 0 0 #FF0000,
-        -1px 0 0 #FF0000,
-        0 1px 0 #FF0000,
-        0 -1px 0 #FF0000;
+    color: #FF7EB4;
+    -webkit-text-fill-color: #FF7EB4;
 }
 
 /* 3. 이미지 스타일 설정 */
@@ -235,13 +229,13 @@ body.index-page-body {
 }
 
 .over-burst {
-    width: min(520px, 78vw);
-    min-height: 150px;
+    width: min(600px, 84vw);
+    min-height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding: 28px 56px;
+    padding: 40px 88px;
     background-color: #CCFFF1;
     clip-path: polygon(50% 0%, 54% 24%, 62% 4%, 63% 28%, 74% 8%, 71% 33%, 84% 17%, 78% 40%, 96% 31%, 82% 48%, 100% 50%, 82% 52%, 96% 69%, 78% 60%, 84% 83%, 71% 67%, 74% 92%, 63% 72%, 62% 96%, 54% 76%, 50% 100%, 46% 76%, 38% 96%, 37% 72%, 26% 92%, 29% 67%, 16% 83%, 22% 60%, 4% 69%, 18% 52%, 0% 50%, 18% 48%, 4% 31%, 22% 40%, 16% 17%, 29% 33%, 26% 8%, 37% 28%, 38% 4%, 46% 24%);
     font-family: 'bitcount', sans-serif;
@@ -358,7 +352,7 @@ body.index-page-body {
 }
 
 .question-arrow:hover {
-    color: #ff6b81; /* 마우스 올렸을 때 살짝 포인트 컬러로 변경 */
+    color: #FF7EB4; /* 마우스 올렸을 때 살짝 포인트 컬러로 변경 */
 }
 
 .question-arrow:disabled {
@@ -389,11 +383,13 @@ body.index-page-body {
 }
 
 .check-photo-link {
-    width: min(330px, 70vw);
-    min-height: 105px;
+    width: min(390px, 76vw);
+    min-height: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    padding: 26px 64px;
     text-decoration: none;
     background-color: #fff9ff;
     font-family: 'bitcount', sans-serif;
@@ -403,8 +399,8 @@ body.index-page-body {
 }
 
 .check-photo-link:hover {
-    -webkit-text-fill-color: #FFAEE7;
-    color: #FFAEE7;
+    -webkit-text-fill-color: #FF7EB4;
+    color: #FF7EB4;
 }
 
 @media (max-width: 640px) {
@@ -420,7 +416,7 @@ body.index-page-body {
 
     .hero-title {
         margin: 10px 0 78px;
-        font-size: 25px;
+        font-size: 30px;
     }
 
     .index-ready-section {
@@ -428,9 +424,9 @@ body.index-page-body {
     }
 
     .ready-start-link {
-        width: min(330px, 78vw);
-        min-height: 112px;
-        padding: 22px 42px;
+        width: min(370px, 84vw);
+        min-height: 130px;
+        padding: 28px 52px;
         font-size: 21px;
     }
 
@@ -470,13 +466,15 @@ body.index-page-body {
     }
 
     .check-photo-link {
-        min-height: 88px;
+        min-height: 106px;
+        padding: 22px 48px;
         font-size: 19px;
     }
 
     .over-burst {
-        min-height: 118px;
-        padding: 24px 42px;
+        width: min(430px, 88vw);
+        min-height: 142px;
+        padding: 30px 56px;
         font-size: 19px;
     }
 }
