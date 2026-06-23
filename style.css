@@ -10,9 +10,11 @@ body {
 
 body.second-page-body {
     background-color: #F7FFF0;
-    background-image: radial-gradient(circle, #F3EFFF 0 12.5px, transparent 13.5px);
-    background-size: 112px 112px;
-    background-position: 26px 22px;
+    background-image:
+        radial-gradient(circle, #F3EFFF 0 12.5px, transparent 13.5px),
+        radial-gradient(circle, #F3EFFF 0 12.5px, transparent 13.5px);
+    background-size: 156px 124px;
+    background-position: 32px 22px, 110px 84px;
     background-repeat: repeat;
 }
 
@@ -22,9 +24,11 @@ body.fourth-page-body {
 }
 
 body.fourth-page-body {
-    background-image: radial-gradient(circle, #EDFDFF 0 12.5px, transparent 13.5px);
-    background-size: 112px 112px;
-    background-position: 26px 22px;
+    background-image:
+        radial-gradient(circle, #EDFDFF 0 12.5px, transparent 13.5px),
+        radial-gradient(circle, #EDFDFF 0 12.5px, transparent 13.5px);
+    background-size: 156px 124px;
+    background-position: 32px 22px, 110px 84px;
     background-repeat: repeat;
 }
 
