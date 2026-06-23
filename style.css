@@ -3,14 +3,16 @@ body {
     padding: 0;
     background-color: #ffffff;
     display: flex;
-    justify-content: center;  
+    justify-content: center;
+    font-family: 'bitcount', sans-serif;
 }
 
 @font-face {
     font-family: 'bitcount'; /* 내가 지어준 폰트 이름 */
-    src: url('BitcountGridSingle-Medium.ttf') format('ttf');
+    src: url('Bitcount_Grid_Single/BitcountGridSingle-Medium.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 .scroll-container {
@@ -79,11 +81,11 @@ body {
     transform: rotateY(180deg);
 }
 
-.third-page {
+.third-page,
+.third-page-flow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 40px;
 }
 
 .sub-text {
@@ -91,34 +93,89 @@ body {
     margin: 20px 0;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.third-stage {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.over-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+.over-stage.is-fading-out {
+    opacity: 0;
+}
+
+.question-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 70px 20px 90px;
+    animation: pageFadeIn 0.45s ease;
+}
+
+.question-heading {
+    margin-bottom: 34px;
+    text-align: center;
+    font-family: 'bitcount', sans-serif;
+    font-size: 19px;
+    line-height: 1.45;
+    color: #111;
+}
+
+.question-heading-point {
+    margin-top: 10px;
+    color: #ff6f95;
+    font-size: 31px;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* 하늘색 질문 상자 스타일 */
 .question-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 150px;
+    margin-bottom: 0;
 }
 
 .question-box {
-    width: 500px;          /* 하늘색 상자 가로 크기 */
-    height: 250px;         /* 하늘색 상자 세로 크기 */
+    width: min(560px, 82vw);          /* 하늘색 상자 가로 크기 */
+    min-height: 300px;         /* 하늘색 상자 세로 크기 */
     background-color: #eefaff; /* 하늘색 배경 */
-    border-radius: 30px;   /* 둥근 모서리 */
+    border-radius: 22px;   /* 둥근 모서리 */
     position: relative;    /* 안의 요소들 배치를 고정하기 위함 */
-    padding: 3px;
+    padding: 60px 86px 46px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'bitcount'; /* 폰트가 있다면 변경 가능 */
+    font-family: 'bitcount', sans-serif;
 }
 
 /* 1/5 숫자 표시 위치 */
 #question-count {
     position: absolute;
-    top: 20px;
-    right: 30px;
+    top: 24px;
+    right: 68px;
     font-weight: bold;
     font-size: 16px;
     color: #333;
@@ -126,26 +183,136 @@ body {
 
 /* 질문 텍스트 스타일 */
 #question-text {
-    width: 70%;
+    width: 100%;
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 19px;
+    line-height: 1.45;
     color: #000;
     word-break: keep-all; /* 단어 단위로 줄바꿈 */
 }
 
-/* 오른쪽 화살표 버튼 위치 및 스타일 */
-#next-arrow {
+/* 질문 이동 화살표 버튼 위치 및 스타일 */
+.question-arrow {
     position: absolute;
-    right: 30px;
-    bottom: 50%;
-    transform: translateY(50%);
-    font-size: 24px;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    transform: translateY(-50%);
+    font-family: 'bitcount', sans-serif;
+    font-size: 30px;
     font-weight: bold;
     color: #333;
     cursor: pointer;
     user-select: none;
+    line-height: 1;
 }
-#next-arrow:hover {
+
+#prev-arrow {
+    left: 34px;
+}
+
+#next-arrow {
+    right: 34px;
+}
+
+.question-arrow:hover {
     color: #ff6b81; /* 마우스 올렸을 때 살짝 포인트 컬러로 변경 */
+}
+
+.question-arrow:disabled {
+    color: #b8b8b8;
+    cursor: default;
+}
+
+.finish-box {
+    width: min(560px, 82vw);
+    min-height: 300px;
+    padding: 46px 52px 42px;
+    box-sizing: border-box;
+    border-radius: 22px;
+    background-color: #f0eafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'bitcount', sans-serif;
+    text-align: center;
+}
+
+.finish-copy {
+    margin-bottom: 28px;
+    font-size: 18px;
+    line-height: 1.45;
+    color: #111;
+}
+
+.check-photo-link {
+    width: min(330px, 70vw);
+    min-height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-color: #fff9ff;
+    color: #ff6f95;
+    font-family: 'bitcount', sans-serif;
+    font-size: 24px;
+    animation: blink 1.5s ease-in-out infinite;
+    clip-path: polygon(0 48%, 14% 42%, 5% 28%, 24% 34%, 20% 12%, 38% 28%, 50% 0, 62% 28%, 80% 12%, 76% 34%, 95% 28%, 86% 42%, 100% 48%, 86% 56%, 95% 72%, 76% 66%, 80% 88%, 62% 72%, 50% 100%, 38% 72%, 20% 88%, 24% 66%, 5% 72%, 14% 56%);
+}
+
+.check-photo-link:hover {
+    color: #ff426e;
+}
+
+@media (max-width: 640px) {
+    .question-stage {
+        padding: 52px 14px 70px;
+    }
+
+    .question-heading {
+        margin-bottom: 24px;
+        font-size: 15px;
+    }
+
+    .question-heading-point {
+        font-size: 24px;
+    }
+
+    .question-box,
+    .finish-box {
+        width: calc(100vw - 32px);
+        min-height: 270px;
+        border-radius: 18px;
+        padding: 58px 58px 38px;
+    }
+
+    #question-count {
+        right: 54px;
+        font-size: 14px;
+    }
+
+    #question-text,
+    .finish-copy {
+        font-size: 15px;
+    }
+
+    #prev-arrow {
+        left: 16px;
+    }
+
+    #next-arrow {
+        right: 16px;
+    }
+
+    .check-photo-link {
+        min-height: 88px;
+        font-size: 19px;
+    }
 }

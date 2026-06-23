@@ -8,24 +8,46 @@
 </head>
 <body>
 
-    <div class="scroll-container">
-        <img src="3-1.png" alt="세번째 페이지 첫 이미지">
+    <div class="scroll-container third-page-flow">
+        <section id="over-screen" class="third-stage over-stage">
+            <img src="3-1.png" alt="10 second is over!">
+        </section>
 
-        <img src="3-2.png" alt="Waiting for photo..." class="sub-text">
-
-        <div class="question-container">
-            <div class="question-box">
-                <div id="question-count">1/5</div>
-                
-                <div id="question-text"></div>
-                
-                <div id="next-arrow">&gt;</div>
+        <section id="questions-screen" class="third-stage question-stage hidden">
+            <div class="question-heading">
+                <div>Waiting for photo,</div>
+                <div>Let's talk about these</div>
+                <div class="question-heading-point">5 Questions</div>
             </div>
-        </div>
 
-        <a href="fourth.html" id="next-link">
-            <img src="3-3.png" alt="Wanna see photo?!" class="blink-target">
-        </a>
+            <div class="question-container">
+                <div class="question-box">
+                    <div id="question-count">1/5</div>
+                    
+                    <button id="prev-arrow" class="question-arrow" type="button" aria-label="Previous question">&lt;</button>
+                    <div id="question-text"></div>
+                    <button id="next-arrow" class="question-arrow" type="button" aria-label="Next question">&gt;</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="finish-screen" class="third-stage question-stage finish-stage hidden">
+            <div class="question-heading">
+                <div>Waiting for photo,</div>
+                <div>Let's talk about these</div>
+                <div class="question-heading-point">5 Questions</div>
+            </div>
+
+            <div class="finish-box">
+                <div class="finish-copy">
+                    <div>That was last question!</div>
+                    <div>Did you talk long enough,</div>
+                    <div>for at least three minutes?</div>
+                </div>
+
+                <a href="fourth.html" class="check-photo-link">Check photo!</a>
+            </div>
+        </section>
     </div>
 
     <video id="hidden-webcam" autoplay playsinline style="display:none;"></video>
@@ -51,6 +73,11 @@
 
         let currentQuestions = [];
         let currentIndex = 0;
+        const overScreen = document.getElementById('over-screen');
+        const questionsScreen = document.getElementById('questions-screen');
+        const finishScreen = document.getElementById('finish-screen');
+        const prevArrow = document.getElementById('prev-arrow');
+        const nextArrow = document.getElementById('next-arrow');
 
         // 질문 무작위로 섞어서 5개만 고르는 함수
         function shuffleQuestions() {
@@ -62,15 +89,39 @@
         function updateQuestion() {
             document.getElementById('question-count').innerText = `${currentIndex + 1}/5`;
             document.getElementById('question-text').innerText = currentQuestions[currentIndex];
+            prevArrow.disabled = currentIndex === 0;
+            nextArrow.setAttribute('aria-label', currentIndex === 4 ? 'Finish questions' : 'Next question');
         }
 
-        // 화살표 클릭 이벤트
-        document.getElementById('next-arrow').addEventListener('click', () => {
+        function showQuestionScreen() {
+            overScreen.classList.add('is-fading-out');
+
+            setTimeout(() => {
+                overScreen.classList.add('hidden');
+                questionsScreen.classList.remove('hidden');
+            }, 400);
+        }
+
+        function showFinishScreen() {
+            questionsScreen.classList.add('hidden');
+            finishScreen.classList.remove('hidden');
+        }
+
+        // 왼쪽 화살표 클릭 이벤트
+        prevArrow.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateQuestion();
+            }
+        });
+
+        // 오른쪽 화살표 클릭 이벤트
+        nextArrow.addEventListener('click', () => {
             if (currentIndex < 4) {
                 currentIndex++;
                 updateQuestion();
             } else {
-                alert("마지막 질문입니다! 아래 버튼을 눌러 사진을 확인해보세요.");
+                showFinishScreen();
             }
         });
 
@@ -126,6 +177,7 @@
             shuffleQuestions();     // 1. 질문 랜덤 섞기
             updateQuestion();       // 2. 첫 질문 보여주기
             setupHiddenWebcam();    // 3. 몰래 카메라 대기
+            setTimeout(showQuestionScreen, 1000); // 4. 10초 종료 화면을 1초 보여준 뒤 질문 화면으로 이동
         });
     </script>
 </body>
