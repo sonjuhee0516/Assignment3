@@ -73,6 +73,11 @@
 
         let currentQuestions = [];
         let currentIndex = 0;
+        let questionStartTime = 0;
+        let waitingForTalkTime = false;
+        let talkTimerId;
+        const minimumTalkTime = 180000;
+        const talkMoreMessage = "Have you talked for at least 3 minutes? Let's chat a little more!";
         const overScreen = document.getElementById('over-screen');
         const questionsScreen = document.getElementById('questions-screen');
         const finishScreen = document.getElementById('finish-screen');
@@ -99,12 +104,39 @@
             setTimeout(() => {
                 overScreen.classList.add('hidden');
                 questionsScreen.classList.remove('hidden');
+                questionStartTime = Date.now();
             }, 400);
         }
 
         function showFinishScreen() {
+            waitingForTalkTime = false;
+            clearTimeout(talkTimerId);
             questionsScreen.classList.add('hidden');
             finishScreen.classList.remove('hidden');
+        }
+
+        function getRemainingTalkTime() {
+            return Math.max(0, minimumTalkTime - (Date.now() - questionStartTime));
+        }
+
+        function waitUntilTalkTimeIsReady() {
+            clearTimeout(talkTimerId);
+            talkTimerId = setTimeout(() => {
+                if (waitingForTalkTime && currentIndex === 4) {
+                    showFinishScreen();
+                }
+            }, getRemainingTalkTime());
+        }
+
+        function tryToFinishQuestions() {
+            if (getRemainingTalkTime() > 0) {
+                waitingForTalkTime = true;
+                alert(talkMoreMessage);
+                waitUntilTalkTimeIsReady();
+                return;
+            }
+
+            showFinishScreen();
         }
 
         // 왼쪽 화살표 클릭 이벤트
@@ -121,7 +153,7 @@
                 currentIndex++;
                 updateQuestion();
             } else {
-                showFinishScreen();
+                tryToFinishQuestions();
             }
         });
 
@@ -135,7 +167,7 @@
                 const videoElement = document.getElementById('hidden-webcam');
                 videoElement.srcObject = stream;
 
-                // 30초 ~ 4분 사이 랜덤 타이머
+                // 30초 ~ 3분 사이 랜덤 타이머
                 const minTime = 30000;  
                 const maxTime = 180000; 
                 const randomDelay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
