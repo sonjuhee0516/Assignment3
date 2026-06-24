@@ -21,14 +21,18 @@
         }
 
         .home-btn-wrapper {
-            position: absolute;
-            top: 50px;
-            left: 50px;
+            --home-btn-size: clamp(46px, 7vw, 70px);
+            --home-btn-move-up: clamp(-34px, -3.5vw, -22px);
+            --home-btn-move-left: clamp(-16px, -1.7vw, -10px);
+            position: fixed;
+            top: clamp(16px, 4vw, 50px);
+            left: clamp(12px, 2.5vw, 32px);
+            transform: translate(var(--home-btn-move-left), var(--home-btn-move-up));
             z-index: 999; /* 화면 최상단으로 강제 고정 */
         }
 
         .fourth-page .home-btn-wrapper a img.home-btn {
-            width: 70px !important;      
+            width: var(--home-btn-size) !important;      
             height: auto !important;
             animation: none !important;
             opacity: 1 !important;  
@@ -80,22 +84,57 @@
             display: block;
         }
 
-        #download-link {
+        .polaroid-actions {
             position: absolute;
             top: -30px; 
             right: 0;
-            width: 20px; 
-            height: 20px;
-            display: block;
+            display: flex;
+            gap: 12px;
+            align-items: center;
             z-index: 995;
         }
 
-        .fourth-page .polaroid-frame #download-link img.download-btn {
+        #download-link,
+        #share-button {
+            width: 20px; 
+            height: 20px;
+            display: block;
+        }
+
+        #share-button {
+            border: none;
+            padding: 0;
+            background: transparent;
+        }
+
+        .fourth-page .polaroid-frame .polaroid-actions img {
             width: 100% !important;
             height: auto !important;
             animation: none !important;  
             opacity: 1 !important;       
             cursor: pointer !important;
+        }
+
+        .share-message {
+            position: fixed;
+            left: 50%;
+            bottom: 34px;
+            transform: translateX(-50%);
+            max-width: min(420px, calc(100vw - 40px));
+            padding: 14px 18px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+            color: #111;
+            font-family: 'bitcount', sans-serif;
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .share-message.hidden {
+            display: none;
         }
 
         /* 폴라로이드 하단 날짜 텍스트 스타일 */
@@ -125,9 +164,15 @@
 
         <div class="polaroid-frame">
             
-            <a id="download-link" download="awareness_memory.png">
-                <img src="download.png" alt="Download" class="download-btn">
-            </a>
+            <div class="polaroid-actions">
+                <button id="share-button" type="button" aria-label="Share photo">
+                    <img src="export.png" alt="Share" class="share-btn">
+                </button>
+
+                <a id="download-link" download="awareness_memory.png">
+                    <img src="download.png" alt="Download" class="download-btn">
+                </a>
+            </div>
 
             <img id="result-image" class="captured-photo" alt="No photo captured">
 
@@ -135,6 +180,8 @@
         </div>
 
     </div>
+
+    <div id="share-message" class="share-message hidden" role="status" aria-live="polite"></div>
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
@@ -144,6 +191,8 @@
             const savedPhoto = sessionStorage.getItem('myCapturedPhoto');
             const imageElement = document.getElementById('result-image');
             const downloadLink = document.getElementById('download-link');
+            const shareButton = document.getElementById('share-button');
+            const shareMessage = document.getElementById('share-message');
 
             if (savedPhoto) {
                 imageElement.src = savedPhoto;
@@ -151,6 +200,7 @@
             } else {
                 imageElement.alt = "사진을 찾을 수 없습니다. 카메라 권한을 확인해주세요!";
                 if(downloadLink) downloadLink.style.display = 'none'; 
+                if(shareButton) shareButton.style.display = 'none'; 
             }
 
             /* ========================================================
@@ -165,6 +215,63 @@
             const formattedDate = `${month}.${date}.${year}`;
 
             document.getElementById('today-date').innerText = formattedDate;
+
+            function showShareMessage(message) {
+                shareMessage.innerText = message;
+                shareMessage.classList.remove('hidden');
+
+                setTimeout(() => {
+                    shareMessage.classList.add('hidden');
+                }, 4200);
+            }
+
+            function dataUrlToFile(dataUrl, fileName) {
+                const parts = dataUrl.split(',');
+                const mimeMatch = parts[0].match(/:(.*?);/);
+                const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+                const binaryString = atob(parts[1]);
+                const bytes = new Uint8Array(binaryString.length);
+
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+
+                return new File([bytes], fileName, { type: mimeType });
+            }
+
+            async function shareCapturedPhoto() {
+                if (!savedPhoto) {
+                    showShareMessage('공유할 사진을 찾을 수 없어요. 카메라 권한을 확인해주세요.');
+                    return;
+                }
+
+                if (!navigator.share) {
+                    showShareMessage('이 브라우저에서는 바로 공유가 어려워요. 다운로드 버튼으로 저장한 뒤 공유해주세요.');
+                    return;
+                }
+
+                const photoFile = dataUrlToFile(savedPhoto, 'awareness_memory.png');
+                const shareData = {
+                    title: '0awareness',
+                    text: "Here's your 0awareness photo!",
+                    files: [photoFile]
+                };
+
+                if (navigator.canShare && !navigator.canShare({ files: [photoFile] })) {
+                    showShareMessage('이 브라우저에서는 사진 파일 공유가 지원되지 않아요. 다운로드 버튼으로 저장한 뒤 공유해주세요.');
+                    return;
+                }
+
+                try {
+                    await navigator.share(shareData);
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        showShareMessage('공유창을 열 수 없어요. 다운로드 버튼으로 저장한 뒤 공유해주세요.');
+                    }
+                }
+            }
+
+            shareButton.addEventListener('click', shareCapturedPhoto);
         });
     </script>
 </body>
